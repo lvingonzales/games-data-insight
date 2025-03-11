@@ -13,8 +13,6 @@ function YAxis({
 }) {
   // use the provided scale to find the minimum and maximum value
   const [yMin, yMax] = YScale.range();
-  console.log("yMin", yMin);
-  console.log("yMax", yMax);
   const ticks = YScale.ticks(numTicksForPixels((yMax - yMin), +tickDistance));
   return (
     <g>

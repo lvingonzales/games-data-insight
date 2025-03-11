@@ -14,8 +14,6 @@ function XAxis({
 }) {
   // use the provided scale to find the minimum and maximum value
   const [xMin, xMax] = XScale.range();
-  console.log("XMIN", xMin);
-  console.log("XMax", xMax);
   const ticks = XScale.ticks(numTicksForPixels((xMax - xMin), +tickDistance));
   return (
     <g transform={`translate(0 ${innerHeight})`}>
