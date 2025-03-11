@@ -34,8 +34,6 @@ function SalesByYear() {
     (d) => d[2]
   );
 
-  //console.log("[groups]", groups);
-
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left} ${margin.top})`}>
@@ -44,23 +42,35 @@ function SalesByYear() {
           title={xTitle}
           innerHeight={innerHeight}
           tickDistance={100}
+          lineColor="#FFF7F8"
+          textColor="#FFF7F8"
         />
         <Line groups={groups} />
-        <YAxis YScale={yScale} title={yTitle} />
+        <YAxis
+          YScale={yScale}
+          title={yTitle}
+          lineColor="#FFF7F8"
+          textColor="#FFF7F8"
+        />
+        <g display="none">
+          <circle r={2.5} />
+          <text textAnchor="middle" y={-8}></text>
+        </g>
       </g>
     </svg>
   );
 }
 
+
+
 function Line({ groups }) {
   const pathRef = React.useRef();
 
-  const line = d3.line()
+  const line = d3.line();
 
   const paths = d3
     .select(pathRef.current)
     .attr("fill", "none")
-    .attr("stroke", "steelblue")
     .attr("stroke-width", 2)
     .attr("stroke-linejoin", "round")
     .attr("stroke-linecap", "round")
@@ -69,17 +79,21 @@ function Line({ groups }) {
     .join("path")
     .attr("class", "year-paths")
     .style("mix-blend-mode", "multiply")
-    .attr("d", line);
+    .attr("d", line)
 
   paths.each(function () {
     const path = d3.select(this);
     const length = path.node().getTotalLength();
 
+    path.attr("stroke", function (d) {
+      return colours[d.z ? d.z : "steelblue"];
+    });
+
     path
       .attr("stroke-dasharray", length)
       .attr("stroke-dashoffset", length)
       .transition()
-      .duration(1000)
+      .duration(2500)
       .ease(d3.easeLinear)
       .attr("stroke-dashoffset", 0);
   });
@@ -122,6 +136,13 @@ const fields = {
     accessor: (d) => d.sales,
     title: "Sales(millions)",
   },
+};
+
+const colours = {
+  NA: "#67FF4C",
+  EU: "#6CB0FF",
+  JP: "#FD8888",
+  Other: "#FFD455",
 };
 
 export default SalesByYear;
