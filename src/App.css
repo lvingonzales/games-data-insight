@@ -1,1 +1,10 @@
+.tick > line,
+.tick > text{
+    fill: #fff7f8;
+    stroke: #fff7f8;
+    font-size: 12px;
+}
 
+.domain {
+    stroke: #fff7f8;
+}

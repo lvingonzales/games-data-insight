@@ -7,7 +7,7 @@ function SalesByYear() {
   const data = LoadData();
 
   const width = 1000;
-  const height = 500;
+  const height = 563;
   const margin = { top: 10, right: 50, bottom: 30, left: 50 };
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
