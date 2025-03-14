@@ -2,9 +2,15 @@ import * as d3 from "d3";
 import * as React from "react";
 import XAxis from "../axes/XAxis";
 import YAxis from "../axes/YAxis";
+import { useElementOnScreen } from "../Hooks";
 
 function SalesByYear() {
   const data = LoadData();
+
+  const [obeserverMask, chartVisible] = useElementOnScreen({
+    ...options,
+    threshold: 0.1,
+  });
 
   const width = 1000;
   const height = 563;
@@ -35,35 +41,41 @@ function SalesByYear() {
   );
 
   return (
-    <svg width={width} height={height}>
-      <g transform={`translate(${margin.left} ${margin.top})`}>
-        <XAxis
-          XScale={xScale}
-          title={xTitle}
-          innerHeight={innerHeight}
-          tickDistance={100}
-          lineColor="#FFF7F8"
-          textColor="#FFF7F8"
-        />
-        <Line groups={groups} />
-        <YAxis
-          YScale={yScale}
-          title={yTitle}
-          lineColor="#FFF7F8"
-          textColor="#FFF7F8"
-        />
-        <g display="none">
-          <circle r={2.5} />
-          <text textAnchor="middle" y={-8}></text>
+    <div ref={obeserverMask}>
+      <svg width={width} height={height}>
+        <g transform={`translate(${margin.left} ${margin.top})`}>
+          <XAxis
+            XScale={xScale}
+            title={xTitle}
+            innerHeight={innerHeight}
+            tickDistance={100}
+            lineColor="#FFF7F8"
+            textColor="#FFF7F8"
+          />
+          <Line groups={groups} chartVisible={chartVisible} />
+          <YAxis
+            YScale={yScale}
+            title={yTitle}
+            lineColor="#FFF7F8"
+            textColor="#FFF7F8"
+          />
+          <g display="none">
+            <circle r={2.5} />
+            <text textAnchor="middle" y={-8}></text>
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+    </div>
   );
 }
 
+const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 100,
+};
 
-
-function Line({ groups }) {
+function Line({ groups, chartVisible }) {
   const pathRef = React.useRef();
 
   const line = d3.line();
@@ -81,23 +93,26 @@ function Line({ groups }) {
     .style("mix-blend-mode", "multiply")
     .attr("d", line)
 
-  paths.each(function () {
-    const path = d3.select(this);
-    const length = path.node().getTotalLength();
-
-    path.attr("stroke", function (d) {
-      return colours[d.z ? d.z : "steelblue"];
-    });
-
-    path
-      .attr("stroke-dasharray", length)
-      .attr("stroke-dashoffset", length)
-      .transition()
-      .duration(2500)
-      .ease(d3.easeLinear)
-      .attr("stroke-dashoffset", 0);
-  });
-
+    console.log(chartVisible);
+      if (chartVisible) {
+        paths.each(function () {
+          const path = d3.select(this);
+          const length = path.node().getTotalLength();
+      
+          path.attr("stroke", function (d) {
+            return colours[d.z ? d.z : "steelblue"];
+          });
+      
+          path
+            .attr("stroke-dasharray", length)
+            .attr("stroke-dashoffset", length)
+            .transition()
+            .delay(500)
+            .duration(2500)
+            .ease(d3.easeLinear)
+            .attr("stroke-dashoffset", 0);
+        });
+      }
   return <g ref={pathRef}></g>;
 }
 

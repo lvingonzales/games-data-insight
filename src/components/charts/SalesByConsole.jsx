@@ -1,12 +1,24 @@
 import * as d3 from "d3";
 import * as colors from "./Colours.json";
 import { useEffect, useRef } from "react";
+import { useElementOnScreen } from "../Hooks";
+
+const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 100,
+};
 
 function SalesByConsole() {
   const chartRef = useRef();
   const width = 1000;
   const height = 563;
   const margin = { top: 10, right: 50, bottom: 30, left: 50 };
+
+  const [obeserverMask, chartVisible] = useElementOnScreen({
+    ...options,
+    threshold: 0.1,
+  });
 
   useEffect(() => {
     d3.csv("/SalesByConsole.csv").then((data) => {
@@ -69,8 +81,8 @@ function SalesByConsole() {
         .data((D) => D.map((d) => ((d.key = D.key), d)))
         .join("rect")
         .attr("x", (d) => x(d.data[0]))
-        .attr("y", (d) => height - 20)
-        .attr("height", 0)
+        .attr("y", (d) => y(d[1]))
+        .attr("height", (d) => y(d[0]) - y(d[1]))
         .attr("width", x.bandwidth())
         .append("title")
         .text(
@@ -91,19 +103,14 @@ function SalesByConsole() {
         .call(d3.axisLeft(y).ticks(null, "s"));
 
       svg.selectAll(".axis .tick line").attr("fill", "#fff7f8");
-
-      svg
-        .selectAll("rect")
-        .transition()
-        .duration(500)
-        .ease(d3.easeSin)
-        .delay((d, i) => i * 50)
-        .attr("y", (d) => y(d[1]))
-        .attr("height", (d) => y(d[0]) - y(d[1]));
     });
   }, []);
 
-  return <div ref={chartRef}></div>;
+  return (
+    <div ref={obeserverMask}>
+      <div ref={chartRef}></div>
+    </div>
+  );
 }
 
 export default SalesByConsole;
