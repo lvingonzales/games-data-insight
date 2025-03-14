@@ -3,6 +3,7 @@ import XAxis from "./components/axes/XAxis";
 import "./App.css"
 import YAxis from "./components/axes/YAxis";
 import SalesByYear from "./components/charts/SalesByYear";
+import SalesByPub from "./components/charts/SalesByPub";
 
 
 function App () {
@@ -10,6 +11,7 @@ function App () {
     return (
         <>
             <SalesByYear />
+            <SalesByPub />
         </>
     )
 }
