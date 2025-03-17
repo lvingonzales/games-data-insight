@@ -3,6 +3,8 @@ import * as React from "react";
 import XAxis from "../axes/XAxis";
 import YAxis from "../axes/YAxis";
 import { useElementOnScreen } from "../Hooks";
+import Card from "../Cards";
+import Highlight from "../Highlight";
 
 function SalesByYear() {
   const data = LoadData();
@@ -41,30 +43,60 @@ function SalesByYear() {
   );
 
   return (
-    <div ref={obeserverMask}>
-      <svg width={width} height={height}>
-        <g transform={`translate(${margin.left} ${margin.top})`}>
-          <XAxis
-            XScale={xScale}
-            title={xTitle}
-            innerHeight={innerHeight}
-            tickDistance={100}
-            lineColor="#FFF7F8"
-            textColor="#FFF7F8"
-          />
-          <Line groups={groups} chartVisible={chartVisible} />
-          <YAxis
-            YScale={yScale}
-            title={yTitle}
-            lineColor="#FFF7F8"
-            textColor="#FFF7F8"
-          />
-          <g display="none">
-            <circle r={2.5} />
-            <text textAnchor="middle" y={-8}></text>
-          </g>
-        </g>
-      </svg>
+    <div className="section">
+      <div className="background">
+        <h1>Sales By Console</h1>
+        <h3>Sales figures in millions for the various consoles</h3>
+        <div ref={obeserverMask}>
+          <svg width={width} height={height}>
+            <g transform={`translate(${margin.left} ${margin.top})`}>
+              <XAxis
+                XScale={xScale}
+                title={xTitle}
+                innerHeight={innerHeight}
+                tickDistance={100}
+                lineColor="#FFF7F8"
+                textColor="#FFF7F8"
+              />
+              <Line groups={groups} chartVisible={chartVisible} />
+              <YAxis
+                YScale={yScale}
+                title={yTitle}
+                lineColor="#FFF7F8"
+                textColor="#FFF7F8"
+              />
+              <g display="none">
+                <circle r={2.5} />
+                <text textAnchor="middle" y={-8}></text>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <Card>
+          <p>
+            First we will be looking at the Sales By Year for the Four Regions,
+            <Highlight color={"#67FF4C"}>North America</Highlight>,{" "}
+            <Highlight color={"#6CB0FF"}>Europe</Highlight>,{" "}
+            <Highlight color={"#FD8888"}>Japan</Highlight>, and{" "}
+            <Highlight color={"#FFD455"}>Other</Highlight>.
+          </p>
+        </Card>
+        <Card ref={obeserverMask}>
+            <p>
+              <em style={{ fontWeight: "bold" }}>2009</em> had the most
+              successful game releases of the top 200 with
+              <em style={{ fontWeight: "bold" }}> 180.85 million</em> copies
+              sold between just <em style={{ fontWeight: "bold" }}>14 games</em>
+              .{" "}
+              <Highlight color={"#FF0000"} textColor="#fff7f8">
+                Nintendo
+              </Highlight>
+              continues to dominate having published 5 of the 14 games.
+            </p>
+          </Card>
+      </div>
     </div>
   );
 }
@@ -91,28 +123,28 @@ function Line({ groups, chartVisible }) {
     .join("path")
     .attr("class", "year-paths")
     .style("mix-blend-mode", "multiply")
-    .attr("d", line)
+    .attr("d", line);
 
-    console.log(chartVisible);
-      if (chartVisible) {
-        paths.each(function () {
-          const path = d3.select(this);
-          const length = path.node().getTotalLength();
-      
-          path.attr("stroke", function (d) {
-            return colours[d.z ? d.z : "steelblue"];
-          });
-      
-          path
-            .attr("stroke-dasharray", length)
-            .attr("stroke-dashoffset", length)
-            .transition()
-            .delay(500)
-            .duration(2500)
-            .ease(d3.easeLinear)
-            .attr("stroke-dashoffset", 0);
-        });
-      }
+  console.log(chartVisible);
+  if (chartVisible) {
+    paths.each(function () {
+      const path = d3.select(this);
+      const length = path.node().getTotalLength();
+
+      path.attr("stroke", function (d) {
+        return colours[d.z ? d.z : "steelblue"];
+      });
+
+      path
+        .attr("stroke-dasharray", length)
+        .attr("stroke-dashoffset", length)
+        .transition()
+        .delay(500)
+        .duration(2500)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+    });
+  }
   return <g ref={pathRef}></g>;
 }
 
