@@ -1,0 +1,70 @@
+<div className="section" id="SalesByYear">
+        <div className="background">
+          <h1>Sales By Year</h1>
+          <h3>
+            Sales figures in millions for the four regions on a timeline from
+            1982 to 2015
+          </h3>
+          <SalesByYear />
+        </div>
+        <div>
+          <Card>
+            <p>
+              First we will be looking at the Sales By Year for the Four
+              Regions,
+              <Highlight color={"#67FF4C"}>North America</Highlight>,{" "}
+              <Highlight color={"#6CB0FF"}>Europe</Highlight>,{" "}
+              <Highlight color={"#FD8888"}>Japan</Highlight>, and{" "}
+              <Highlight color={"#FFD455"}>Other</Highlight>.
+            </p>
+          </Card>
+          <Card>
+            <p>
+              <em style={{ fontWeight: "bold" }}>2009</em> had the most
+              successful game releases of the top 200 with
+              <em style={{ fontWeight: "bold" }}> 180.85 million</em> copies
+              sold between just <em style={{ fontWeight: "bold" }}>14 games</em>
+              .{" "}
+              <Highlight color={"#FF0000"} textColor="#fff7f8">
+                Nintendo
+              </Highlight>
+              continues to dominate having published 5 of the 14 games.
+            </p>
+          </Card>
+          <Card>
+            <p>
+              Game sales throughout the years are often evenly distributed,
+              however there are some stand outs, games like{" "}
+              <Highlight color={"#FF9D00"}>
+                Grand Theft Auto: San Andreas
+              </Highlight>
+              ,{" "}
+              <Highlight color={"#FF0000"} textColor="#fff7f8">
+                Mario kart Wii
+              </Highlight>
+              ,{" "}
+              <Highlight color={"#2DA2FC"} textColor="#fff7f8">
+                Call of Duty Modern Warfare 3
+              </Highlight>{" "}
+              and especially{" "}
+              <Highlight color={"#FF9D00"}>Grand Theft Auto 5</Highlight> all
+              dominated their respective release years.
+            </p>
+          </Card>
+          <Card>
+            <p>
+              If it was not evident before,{" "}
+              <Highlight color={"#67FF4C"}>North American</Highlight> game sales
+              tended to dominate the market, even on a year-by-year basis,
+              although there were some instances where the race was close such
+              as{" "}
+              <em style={{ fontWeight: "bold" }}>1994, 1995, 2000, and 2014</em>
+              . The largest competitor was the{" "}
+              <Highlight color={"#6CB0FF"}>European</Highlight> market,
+              outselling their{" "}
+              <Highlight color={"#67FF4C"}>North American</Highlight>{" "}
+              counterpart in 2005.
+            </p>
+          </Card>
+        </div>
+      </div>
