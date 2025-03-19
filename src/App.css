@@ -1,1 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+    font-family: Abeezee;
+}
+.tick > line,
+.tick > text{
+    fill: #fff7f8;
+    stroke: #fff7f8;
+    font-size: 12px;
+}
+
+.domain {
+    stroke: #fff7f8;
+}
+
+#Info {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
+}
+
+h1 {
+    color: #fff7f8;
+    font-size: 64px;
+    margin-bottom: 0px;
+}
+h3 {
+    color: #fff7f8;
+    font-size: 32px;
+}
+
+
+#root {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    position: relative;
+}
+
+.section {
+    position: relative;
+}
+
+.info {
+    display: flex;
+    gap: 100vh;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid gold;
+    width: 30%;
+}
+
+.card-container {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    max-width: 600px;
+    background-color: #fff7f8;
+    font-size: 1.5rem;
+    font-family: Abeezee;
+    padding: 1rem;
+    font-weight: 500;
+    border: 2px solid #ada8a9;
+    border-radius: 1rem;
+}
+
+.background {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#Info {
+    min-height: 100vh;
+}
+
+p {
+    line-height: 1.5em;
+}

@@ -12,12 +12,19 @@ function XAxis({
   hasTicks = true,
   tickDistance = 70,
 }) {
-  // use the provided scale to find the minimum and maximum value
   const [xMin, xMax] = XScale.range();
-  const ticks = XScale.ticks(numTicksForPixels((xMax - xMin), +tickDistance));
+
+  // Determine if the scale is categorical (band or point)
+  const isCategorical = XScale.bandwidth || XScale.step;
+
+  // Generate ticks based on the scale type
+  const ticks = isCategorical
+    ? XScale.domain() // Use the domain for categorical scales
+    : XScale.ticks(numTicksForPixels((xMax - xMin), +tickDistance)); // Use ticks for numerical scales
+
   return (
     <g transform={`translate(0 ${innerHeight})`}>
-      {/* title text element */}
+      {/* Title text element */}
       <text
         x={xMax}
         textAnchor="end"
@@ -27,24 +34,31 @@ function XAxis({
       >
         {title}
       </text>
+
       {/* Axis line */}
       <line x1={xMin} x2={xMax} y1={0} y2={0} stroke={lineColor} />
 
       {/* Axis Ticks */}
-      {/* Checks first if the chart has ticks enabled and displays them if true */}
       {hasTicks
         ? ticks.map((tick) => {
-            const x = XScale(tick);
+            // Calculate the x position for the tick
+            const x = isCategorical
+              ? XScale(tick) + (XScale.bandwidth ? XScale.bandwidth() / 2 : 0) // Center ticks for band scales
+              : XScale(tick); // Use the scale directly for numerical scales
+
             return (
               <g key={tick} transform={`translate(${x} 0)`}>
+                {/* Tick label */}
                 <text
                   y={10}
                   dy="0.8em"
                   textAnchor="middle"
                   fill={textColor}
                 >
-                    {tick}
+                  {tick}
                 </text>
+
+                {/* Tick line */}
                 <line y1={0} y2={8} stroke={lineColor} />
               </g>
             );

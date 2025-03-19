@@ -15,7 +15,7 @@ function YAxis({
   const [yMin, yMax] = YScale.range();
   const ticks = YScale.ticks(numTicksForPixels((yMax - yMin), +tickDistance));
   return (
-    <g>
+    <g transform={`translate(0, 0)`}>
       {/* title text element */}
       <text
         dx={4}
